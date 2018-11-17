@@ -5,7 +5,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-const sha1 = require('sha1')
+const wechat = require('./wechat/g')
 const config = {
   wechat:{
     appID:'wx632e7f7cd8a54180',
@@ -39,20 +39,8 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
-app.use(async(ctx,next)=>{
-  const token = config.wechat.token
-  const signature= ctx.query.signature
-  const nonce = ctx.query.nonce
-  const timestamp = ctx.query.timestamp
-  const echostr = ctx.query.echostr
-  const str = [token, timestamp, nonce].sort().join('')
-  const sha = sha1(str)
-  if(sha === signature){
-    ctx.body=echostr
-  }else{
-    ctx.body='wrong'
-  }
-})
+// 微信加密认证逻辑中间件
+app.use(wechat(config.wechat))
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
