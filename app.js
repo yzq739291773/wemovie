@@ -1,16 +1,27 @@
 const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
+const path = require('path')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const wechat = require('./wechat/g')
+const tools = require('./utils/tools')
+const wechat_file = path.join(__dirname,'./utils/wechat.txt')
 const config = {
   wechat:{
     appID:'wx632e7f7cd8a54180',
     appSecret:'cD2DiTgD6T4MgeUFYc3h8RTHRb73bZ5FFQ8nxQ7jwn6',
-    token:'yuzhiqiang'
+    token:'yuzhiqiang',
+    getAccessToken:()=>{
+      console.log('getAccessToken执行了')
+      return tools.readFileAsync(wechat_file)
+    },
+    saveAccessToken:(data)=>{
+      data = JSON.stringify(data)
+      return tools.writeFileAsync(wechat_file,data)
+    }
   }
 }
 
