@@ -50,7 +50,8 @@ module.exports =function(opts){
             console.log('最后的结果',xmlObj)
             if(xmlObj.MsgType ==='text'){
                 console.log('响应数据')
-                let result =xml.jsonToXml(xml.text(xmlObj,'我是聊天机器人')) 
+                // let result =xml.jsonToXml(xml.text(xmlObj,'我是聊天机器人')) 
+                let result =xml.text(xmlObj,'我是聊天机器人')
                 console.log('ksjfkds',result)
                 ctx.res.setHeader('Content-Type', 'application/xml')
                 

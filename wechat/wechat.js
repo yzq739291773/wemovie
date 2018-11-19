@@ -5,13 +5,13 @@ const api = {
     access_token:`${prefix}?grant_type=client_credential`
 }
 
-module.exports = Wechat = function(opts){
+ function Wechat(opts){
     let that = this
     this.appID = opts.appID
     this.appSecret = opts.appSecret
     this.getAccessToken = opts.getAccessToken
     this.saveAccessToken = opts.saveAccessToken
-
+    console.log("dddd",opts)
     this.getAccessToken()
         .then((data)=>{
             try {
@@ -58,26 +58,22 @@ Wechat.prototype.isValidAccessToken = (data)=>{
     console.log('验证tokenD 最后')
 }
 
-Wechat.prototype.updateAccessToken = ()=>{
-    console.log('更新token2',this)
-    // const appID = this.appID
-    const appID = 'wx7867206a203b6b1b'
+Wechat.prototype.updateAccessToken = function(){
+    console.log('更新token2',this.appID)
+    const appID = this.appID
     console.log('appID',appID)
-    // const appSecret = this.appSecret
-    const appSecret = '59e3e6b21a215b26dee7075e6b6bc444'
-    console.log('appSecret',appSecret)
+    const appSecret = this.appSecret
     const url = api.access_token + '&appid='+appID +'&secret='+appSecret
     console.log('url',url)
     return new Promise((resolve, reject)=>{
         axios.get(url)
             .then(response=>{
                 let data = response.data
-                console.log('更新token的response',data)
+                console.log('更新token的response')
                 if(data&& data.access_token){
                     let now = (new Date().getTime())
                     let expires_in = now + (data.expires_in - 20)*1000
                     data.expires_in = expires_in
-                    // console.log('更新token的结果',data)
                     resolve(data)
                 }else{
                     console.log('结果失败')
@@ -92,3 +88,4 @@ Wechat.prototype.updateAccessToken = ()=>{
     })
 
 }
+module.exports = Wechat

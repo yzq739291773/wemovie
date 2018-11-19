@@ -12,8 +12,8 @@ const tools = require('./utils/tools')
 const wechat_file = path.join(__dirname,'./utils/wechat.txt')
 const config = {
   wechat:{
-    appID:'wx632e7f7cd8a54180',
-    appSecret:'cD2DiTgD6T4MgeUFYc3h8RTHRb73bZ5FFQ8nxQ7jwn6',
+    appID:'wx7867206a203b6b1b',
+    appSecret:'59e3e6b21a215b26dee7075e6b6bc444',
     token:'yuzhiqiang',
     getAccessToken:()=>{
       console.log('getAccessToken执行了')
