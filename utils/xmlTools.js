@@ -29,3 +29,24 @@ exports.jsonToXml = (obj) => {
     const builder = new xml2js.Builder()
     return builder.buildObject(obj)
 }
+
+exports.text = (msg, content)=> {
+    // return jsonToXml({
+    //     xml: {
+    //         ToUserName: msg.FromUserName,
+    //         FromUserName: msg.ToUserName,
+    //         CreateTime: Date.now(),
+    //         MsgType: msg.MsgType,
+    //         Content: content
+    //     }
+    // })
+    return {
+        xml: {
+            ToUserName: msg.FromUserName,
+            FromUserName: msg.ToUserName,
+            CreateTime: Date.now(),
+            MsgType: msg.MsgType,
+            Content: content
+        }
+    }
+}

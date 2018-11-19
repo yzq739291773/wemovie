@@ -46,13 +46,23 @@ module.exports =function(opts){
                 })
             })
 
-            await promise.then((result) => {
-                console.log('xmlTojson',result)
-                    ctx.req.body = result
-                })
-                .catch((e) => {
-                    e.status = 400
-                })
+            let xmlObj = await promise
+            console.log('最后的结果',xmlObj)
+            if(xmlObj.MsgType ==='text'){
+                console.log('响应数据')
+                let result =xml.jsonToXml(xml.text(xmlObj,'我是聊天机器人')) 
+                console.log('ksjfkds',result)
+                ctx.res.setHeader('Content-Type', 'application/xml')
+                
+                // let result = `<xml> 
+                //     <ToUserName>< ![CDATA[${xmlObj.FromUserName}] ]></ToUserName> 
+                //     <FromUserName>< ![CDATA[${xmlObj.ToUserName}] ]></FromUserName> 
+                //     <CreateTime>${now}</CreateTime> 
+                //     <MsgType>< ![CDATA[text] ]></MsgType> 
+                //     <Content>< ![CDATA[我是聊天机器人] ]></Content> 
+                // </xml>`
+                ctx.res.end(result)
+            }
         }
       }
 }
