@@ -1,8 +1,6 @@
 const sha1 = require('sha1')
 const Wechat = require('./wechat.js')
-const tools = require('../utils/tools')
-const getRawBody = require("raw-body");
-const xml = require('../utils/xmlTools')
+const xml = require('../utils/xml')
 
 module.exports =function(opts){
     console.log('我是最早执行的')
@@ -48,22 +46,7 @@ module.exports =function(opts){
 
             let xmlObj = await promise
             console.log('最后的结果',xmlObj)
-            if(xmlObj.MsgType ==='text'){
-                console.log('响应数据')
-                // let result =xml.jsonToXml(xml.text(xmlObj,'我是聊天机器人')) 
-                let result =xml.text(xmlObj,'我是聊天机器人')
-                console.log('ksjfkds',result)
-                ctx.res.setHeader('Content-Type', 'application/xml')
-                
-                // let result = `<xml> 
-                //     <ToUserName>< ![CDATA[${xmlObj.FromUserName}] ]></ToUserName> 
-                //     <FromUserName>< ![CDATA[${xmlObj.ToUserName}] ]></FromUserName> 
-                //     <CreateTime>${now}</CreateTime> 
-                //     <MsgType>< ![CDATA[text] ]></MsgType> 
-                //     <Content>< ![CDATA[我是聊天机器人] ]></Content> 
-                // </xml>`
-                ctx.res.end(result)
-            }
+            wechat.reply(xmlObj,ctx)
         }
       }
 }

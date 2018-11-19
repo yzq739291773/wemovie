@@ -1,4 +1,5 @@
 const axios = require('../utils/axios')
+const xml = require('../utils/xml')
 
 const prefix = 'https://api.weixin.qq.com/cgi-bin/token'
 const api = {
@@ -87,5 +88,15 @@ Wechat.prototype.updateAccessToken = function(){
             })
     })
 
+}
+
+Wechat.prototype.reply = function(xmlObj,ctx){
+    if(xmlObj.MsgType ==='text'){
+        console.log('响应数据')
+        let result =xml.text(xmlObj,'我是聊天机器人')
+        console.log('ksjfkds',result)
+        ctx.res.setHeader('Content-Type', 'application/xml')
+        ctx.res.end(result)
+    }
 }
 module.exports = Wechat

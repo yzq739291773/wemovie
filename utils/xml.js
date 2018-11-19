@@ -10,7 +10,7 @@ function formatMessage(data){
     }
     return message
 }
-exports.xmlToJson = (str) => {
+function xmlToJson(str){
      return new Promise((resolve, reject) => {
         const parseString = xml2js.parseString
         parseString(str, (err, result) => {
@@ -25,12 +25,11 @@ exports.xmlToJson = (str) => {
      })
 }
 
-jsonToXml = (obj) => {
+function jsonToXml(obj) {
     const builder = new xml2js.Builder()
     return builder.buildObject(obj)
 }
-exports.jsonToXml
-exports.text = (msg, content)=> {
+function text(msg, content){
     return jsonToXml({
         xml: {
             ToUserName: msg.FromUserName,
@@ -40,4 +39,10 @@ exports.text = (msg, content)=> {
             Content: content
         }
     })
+}
+
+module.exports = {
+    xmlToJson,
+    jsonToXml,
+    text
 }
