@@ -7,6 +7,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const wechat = require('./wechat/g')
+const Wechat = require('./wechat/wechat.js')
 const tools = require('./utils/tools')
 const wechat_file = path.join(__dirname,'./utils/wechat.txt')
 const config = {
@@ -50,6 +51,8 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+// new Wechat(config.wechat)
+
 // 微信加密认证逻辑中间件
 app.use(wechat(config.wechat))
 // routes
